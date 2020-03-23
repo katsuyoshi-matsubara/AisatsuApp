@@ -12,14 +12,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         button.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
-        when(v.id){
-            R.id.button -> showTimePickerDialog()
-        }
+        showTimePickerDialog()
     }
 
     private fun showTimePickerDialog() {
@@ -27,9 +24,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             this,
             TimePickerDialog.OnTimeSetListener { view, hour, minute ->
                 Log.d("UI_PARTS", "$hour:$minute")
+                showAisatsu(hour)
             },
-            13, 0, true
+            0, 0, true
         )
         timePickerDialog.show()
+    }
+
+    private fun showAisatsu(h: Int) {
+        when (h) {
+            in 2..9 -> textView.text = "おはよう"
+            in 10..17 -> textView.text = "こんにちは"
+            else -> textView.text = "こんばんは"
+        }
     }
 }
